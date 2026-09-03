@@ -1,0 +1,4 @@
+# Cloudflare Pages — Flipduel web (static Vite build)
+name = "flipduel"
+compatibility_date = "2024-09-01"
+pages_build_output_dir = "apps/web/dist"

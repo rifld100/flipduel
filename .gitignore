@@ -1,0 +1,17 @@
+node_modules/
+dist/
+apps/api/data/
+apps/api/src/data/
+*.db
+*.db-shm
+*.db-wal
+apps/web/public/ref-frame-*.jpg
+.env
+.env.local
+*.log
+.DS_Store
+target/
+.anchor/
+test-ledger/
+.idea/
+.vscode/

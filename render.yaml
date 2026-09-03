@@ -1,0 +1,35 @@
+# Flipduel on Render — API + static web (monorepo root)
+services:
+  - type: web
+    name: flipduel-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build -w @flipduel/shared && npm run build -w @flipduel/api
+    startCommand: npm run start -w @flipduel/api
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SOLANA_RPC_URL
+        value: https://api.devnet.solana.com
+      - key: HELIUS_API_KEY
+        sync: false
+      - key: AUTHORITY_PRIVATE_KEY
+        sync: false
+
+  - type: web
+    name: flipduel-web
+    runtime: static
+    plan: free
+    buildCommand: npm install && npm run build -w @flipduel/shared && npm run build -w @flipduel/web
+    staticPublishPath: apps/web/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: flipduel-api
+          envVarKey: RENDER_EXTERNAL_URL
