@@ -10,10 +10,16 @@ import {
 import bs58 from "bs58";
 import { getVaultKey, storeVaultKey } from "../db/queries.js";
 
-const RPC =
-  process.env.SOLANA_RPC_URL ??
-  process.env.HELIUS_RPC_URL ??
-  "https://api.devnet.solana.com";
+function resolveRpcUrl(): string {
+  if (process.env.SOLANA_RPC_URL) return process.env.SOLANA_RPC_URL;
+  if (process.env.HELIUS_RPC_URL) return process.env.HELIUS_RPC_URL;
+  if (process.env.HELIUS_API_KEY) {
+    return `https://mainnet.helius-rpc.com/?api-key=${process.env.HELIUS_API_KEY}`;
+  }
+  return "https://api.devnet.solana.com";
+}
+
+const RPC = resolveRpcUrl();
 
 export const connection = new Connection(RPC, "confirmed");
 
