@@ -11,7 +11,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: SOLANA_RPC_URL
-        value: https://api.devnet.solana.com
+        sync: false
       - key: HELIUS_API_KEY
         sync: false
       - key: AUTHORITY_PRIVATE_KEY
